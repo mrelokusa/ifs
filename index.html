@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HypertenCare AI Assistant Report - Enhanced Architecture</title>
+    <title>HypertenCare AI Assistant Report - Enhanced Architecture & Implementation</title>
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f4; color: #333; }
         .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
@@ -17,1094 +17,450 @@
         .notebooklm-highlight { background: #e8f5e8; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0; }
         .appendix-section { background: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; border-radius: 8px; margin: 20px 0; }
         .prompt-box { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 5px; font-style: italic; margin: 10px 0; }
+        .success-box { background: #d4edda; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Individual Assignment Part 1 and 2</h1>
-        <p><strong>Student Number:</strong> 4346549 </p>
+        <p><strong>Student Number:</strong> 4346549</p>
         <p><strong>Chatbot Name:</strong> HyperCare AI Assistant</p>
         <p><strong>Health Challenge Addressed:</strong> Hypertension Management and Education</p>
         <hr>
 
+        <!-- ============================================= -->
+        <!-- 1. Introduction & Problem Statement -->
+        <!-- ============================================= -->
         <h2>Part 1: Strategic Planning and Architecture</h2>
-
         <h3>1. Introduction & Problem Statement</h3>
-
         <h4>Current Chatbot Summary</h4>
-        <p>The existing HypertenCare platform is a comprehensive digital health intervention designed for South African communities, focusing on hypertension management through accessible health education. This platform is tailored to the unique South African context, acknowledging that 6.8 million South Africans live with hypertension, with a significant 46% unaware of their condition. Its key strengths lie in its accessibility, designed to function on any mobile phone and supporting all 11 official South African languages, thereby ensuring broad reach across diverse linguistic groups. The platform integrates interactive assessment tools, including a 15-question risk assessment that considers local healthcare access and living conditions. Furthermore, it incorporates educational games such as a blood pressure simulator, a lifestyle choice game, and memory matching activities to enhance learning engagement. Crucially, HypertenCare provides direct links to public clinics (over 3,500 nationwide), emergency contacts, and support from community health workers, aligning with NHI principles and demonstrating cultural sensitivity approved by community health workers. The platform's design ensures practical, affordable solutions that do not necessitate private medical aid, making it a vital resource within the public healthcare system.</p>
-
-        <p>Our current hypertension chatbot, built on the WotNot platform, has been a valuable first step in providing users with a simple way to get answers to common questions, acting as a friendly digital front door to health information. However, as we look to the future, its foundational design presents a significant challenge. Because it operates as a "black box" system, we have very little insight or control over how it functions internally. We cannot see the data it is trained on, fine-tune its personality to match our community health approach, or easily connect it to other essential tools and resources. For a health-focused application where trust is everything, this lack of transparency and control represents a critical limitation. The primary concern is the potential for the chatbot to provide incorrect or "hallucinated" advice on a topic as important as hypertension management, where misinformation could have serious health consequences for users.</p>
+        <p>
+            The existing HypertenCare platform is a comprehensive digital health intervention designed for South African communities, focusing on hypertension management through accessible health education. The platform is tailored to the unique South African context, where 6.8 million people live with hypertension, and 46% are unaware of their condition. Its key strengths include:
+        </p>
+        <ul>
+            <li>Accessibility on any mobile phone and support for all 11 official South African languages.</li>
+            <li>Interactive tools like a 15-question risk assessment, educational games (blood pressure simulator, lifestyle choice game), and memory matching activities.</li>
+            <li>Direct links to over 3,500 public clinics, emergency contacts, and community health worker support, aligning with NHI principles.</li>
+            <li>Cultural sensitivity and affordability, making it a vital resource within the public healthcare system.</li>
+        </ul>
+        <p>
+            The current chatbot, built on the WotNot platform, acts as a "black box" with limited transparency, control, and contextual understanding. This presents a critical limitation for a health-focused application, where trust and accuracy are paramount.
+        </p>
 
         <h4>Identified Limitation & Opportunity</h4>
-        <p>This presents us with a fantastic opportunity: to evolve our chatbot from a simple Q&A tool into a truly intelligent and reliable health assistant. The current limitations create a clear pathway for transformation through modern AI approaches.</p>
-
-        <p>Despite its robust features and strong foundational support for hypertension management in South Africa, the current HypertenCare chatbot component exhibits several critical shortcomings that stem from its black-box architecture. These include <strong>limited contextual understanding</strong>, providing general responses without the ability to grasp the nuanced context of individual user situations, their specific medical history, or the unique South African healthcare challenges they might face, such as transportation difficulties or economic constraints. There is also a <strong>lack of personalized guidance</strong>, as the chatbot cannot tailor responses based on user assessment results, risk factors, or specific circumstances like access to public clinics. Its <strong>basic information retrieval</strong> prevents it from performing intelligent searches through the platform's extensive health information, thereby missing opportunities to deliver the most relevant content. Additionally, there is <strong>no integration with assessment tools</strong>, meaning the risk assessment and educational games function independently, leading to missed opportunities for integrated, personalized health guidance. Furthermore, despite the platform's commitment to multilingual support, the chatbot's <strong>limited language processing</strong> capabilities hinder its ability to fully serve South Africa's linguistically diverse population with varying levels of health literacy.</p>
+        <p>
+            The chatbot’s limitations—<strong>lack of contextual understanding, personalized guidance, integration with assessment tools, and advanced language processing</strong>—create an opportunity to transform it into an intelligent, reliable health assistant using modern AI approaches.
+        </p>
 
         <h4>AI Solution: Plan, Do, Check, Adjust Framework</h4>
-        <p>My proposal is to embrace a modern AI approach called <strong>Retrieval-Augmented Generation (RAG)</strong>. The fundamental idea is to use a powerful Large Language Model (LLM) like Google's Gemini, but with a crucial safety mechanism. Instead of allowing it to pull answers from the vast, unpredictable expanse of the internet, we require it to base its responses only on a curated library of trusted medical information that we provide. This way, we achieve the best of both worlds: the natural, conversational power of a leading AI, combined with the accuracy and reliability of expert-vetted knowledge.</p>
+        <p>
+            The proposed solution leverages <strong>Retrieval-Augmented Generation (RAG)</strong> to combine the conversational power of Large Language Models (LLMs) with the accuracy of a curated knowledge base. The implementation uses:
+        </p>
+        <ul>
+            <li><strong>NotebookLM</strong> for knowledge curation and synthesis.</li>
+            <li><strong>Google Gemini</strong> for semantic understanding and response generation.</li>
+            <li><strong>Pinecone</strong> for vectorized knowledge storage and retrieval.</li>
+            <li><strong>n8n</strong> for workflow automation and backend orchestration.</li>
+            <li><strong>Figma</strong> for a responsive, accessible frontend.</li>
+        </ul>
+        <p>
+            The <strong>Plan-Do-Check-Adjust (PDCA)</strong> framework guided the development:
+        </p>
+        <ul>
+            <li><strong>Plan:</strong> Design an AI-enhanced architecture integrating RAG with HypertenCare’s existing features.</li>
+            <li><strong>Do:</strong> Implement the system using n8n, NotebookLM, and Google Gemini, preserving the platform’s UX and accessibility.</li>
+            <li><strong>Check:</strong> Validate performance with South African user scenarios, focusing on cultural sensitivity and integration with clinic directories.</li>
+            <li><strong>Adjust:</strong> Refine the system based on user feedback and testing.</li>
+        </ul>
 
-        <p>To address these identified limitations and transform the HypertenCare chatbot into an intelligent, context-aware digital health assistant, a modern, AI-enhanced architecture has been implemented using a systematic Plan, Do, Check, Adjust (PDCA) framework. This approach leverages Large Language Models (LLMs) and vector database technology to significantly enhance the chatbot's capabilities while maintaining complete control over the knowledge sources. The <strong>Plan Phase</strong> involved designing an enhanced AI architecture that integrates advanced semantic understanding with the existing HypertenCare platform's comprehensive educational resources. This included implementing a Pinecone vector database to store and enable semantic search through South African-specific hypertension information, and integrating advanced LLMs via Google Gemini to provide contextually aware, culturally sensitive responses based solely on our curated knowledge base. The <strong>Do Phase</strong> focused on building the actual implementation using n8n workflow automation and Figma for the frontend interface, while meticulously preserving the platform's excellent user experience, accessibility features, and South African healthcare context. This phase also involved integrating the new AI backend with existing assessment tools and educational content through NotebookLM-curated knowledge sources. During the <strong>Check Phase</strong>, the enhanced system's performance is being validated through testing with diverse South African user scenarios, measuring improvements in response relevance, cultural sensitivity, and its seamless integration with existing platform features like clinic directories and emergency resources. Finally, the <strong>Adjust Phase</strong> involves continuously refining the system based on user feedback from South African communities, ensuring that responses remain culturally appropriate, linguistically accessible, and consistently aligned with public healthcare resources and NHI principles.</p>
-
-        <p>This project represents a transformation of our chatbot into a tool we can be proud of—one that is not only smart but also safe, transparent, and genuinely helpful. This iterative, AI-enhanced approach has evolved the chatbot from a basic, black-box conversational interface into a dynamic, intelligent, and highly personalized tool for hypertension management that maintains complete transparency and control over its knowledge sources.</p>
-
+        <!-- ============================================= -->
+        <!-- 2. Enhanced Architecture Proposal -->
+        <!-- ============================================= -->
         <h3>2. Enhanced Architecture Proposal - Actual Implementation</h3>
-        
         <div class="workflow-highlight">
-            <h4>🔧 Actual Implementation Stack</h4>
-            <p><strong>Frontend:</strong> Figma Site (https://ifs362-elokusa.figma.site)</p>
-            <p><strong>Backend Workflow:</strong> n8n Automation Platform</p>
-            <p><strong>Vector Database:</strong> Pinecone (Index: ifs362-hypertension)</p>
+            <h4>🔧 Implementation Stack</h4>
+            <p><strong>Frontend:</strong> <a href="https://ifs362-elokusa.figma.site" target="_blank">Figma Site</a></p>
+            <p><strong>Backend:</strong> n8n Workflow Automation</p>
+            <p><strong>Vector Database:</strong> Pinecone (Index: <code>ifs362-hypertension</code>)</p>
             <p><strong>AI Model:</strong> Google Gemini 2.0 Flash Experimental</p>
+            <p><strong>Knowledge Curation:</strong> NotebookLM</p>
             <p><strong>Document Source:</strong> Google Drive Integration</p>
-            <p><strong>Knowledge Curation:</strong> Knowledge sources curated by NotebookLM for comprehensive content synthesis</p>
         </div>
 
-        <p>The enhanced HypertenCare platform has been implemented with <strong>AI-powered semantic understanding and contextual awareness</strong> while preserving and amplifying the existing platform's strengths in South African healthcare accessibility and cultural sensitivity. This enhancement integrates seamlessly with the successful HypertenCare interface through a sophisticated n8n workflow that handles document ingestion, vector storage, and intelligent response generation.</p>
+        <h4>Core Implementation Components</h4>
+        <ol>
+            <li>
+                <strong>Figma Frontend:</strong>
+                Responsive, accessible UI connected to the n8n backend via webhooks, preserving HypertenCare’s multilingual support and UX.
+            </li>
+            <li>
+                <strong>n8n Workflow Orchestration:</strong>
+                Manages document ingestion, vector storage, and AI response generation, including:
+                <ul>
+                    <li>Google Drive monitoring for automatic content updates.</li>
+                    <li>Recursive Character Text Splitter for document chunking.</li>
+                    <li>Google Gemini embeddings for vectorization.</li>
+                    <li>Pinecone for semantic search and retrieval.</li>
+                    <li>Window Buffer Memory for conversation context.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>NotebookLM-Enhanced Knowledge Base:</strong>
+                Curated hypertension content from WHO guidelines, SA health resources, and medical fact sheets, structured for optimal retrieval.
+            </li>
+            <li>
+                <strong>Google Gemini AI Processing:</strong>
+                Dual integration for document embedding and conversational responses, with a specialized system prompt for hypertension guidance.
+            </li>
+            <li>
+                <strong>Automated Document Management:</strong>
+                Google Drive folder monitoring for real-time knowledge base updates.
+            </li>
+        </ol>
 
         <div class="notebooklm-highlight">
             <h4>🎯 NotebookLM Knowledge Foundation</h4>
-            <p>The knowledge base foundation was established using <strong>NotebookLM's advanced document synthesis capabilities</strong>. Medical guidelines, WHO fact sheets, and South African health resources were processed through NotebookLM to create structured, accessible hypertension content. This curated knowledge forms the core information that feeds into the Pinecone vector database, ensuring that all AI responses are grounded in verified, well-organized medical information suitable for public health education.</p>
-            <p><strong>Access NotebookLM Knowledge Base:</strong> <a href="https://notebooklm.google.com/notebook/69d83590-a736-48d0-8f08-f3fc3872262b" target="_blank">https://notebooklm.google.com/notebook/69d83590-a736-48d0-8f08-f3fc3872262b</a></p>
+            <p>
+                NotebookLM synthesized medical sources into structured, accessible content, forming the core of the Pinecone vector database. This ensures all AI responses are grounded in verified, culturally sensitive information.
+            </p>
+            <p>
+                <strong>NotebookLM Knowledge Base:</strong>
+                <a href="https://notebooklm.google.com/notebook/69d83590-a736-48d0-8f08-f3fc3872262b" target="_blank">
+                    https://notebooklm.google.com/notebook/69d83590-a736-48d0-8f08-f3fc3872262b
+                </a>
+            </p>
         </div>
-
-        <h4>Core Implementation Components:</h4>
-        <ol>
-            <li><strong>Figma Frontend Integration</strong>: The user interface is built using Figma Site, providing a responsive, accessible design that maintains the successful user experience (UX) and accessibility features of HypertenCare. The frontend connects seamlessly with the n8n backend via webhook triggers to ensure real-time communication with the AI system.</li>
-
-            <li><strong>n8n Workflow Orchestration</strong>: The core intelligence is powered by a comprehensive n8n workflow that manages:
-                <ul>
-                    <li>Google Drive document monitoring for automatic content updates</li>
-                    <li>Document processing and text splitting using Recursive Character Text Splitter</li>
-                    <li>Vector embedding generation using Google Gemini embeddings</li>
-                    <li>Pinecone vector database storage and retrieval operations</li>
-                    <li>Chat message processing with Window Buffer Memory for context retention</li>
-                    <li>AI agent coordination with specialized tools and memory management</li>
-                </ul>
-            </li>
-
-            <li><strong>NotebookLM-Enhanced Knowledge Base</strong>: The foundational hypertension information was systematically curated using NotebookLM to synthesize medical sources into accessible, structured content. This curated knowledge is then integrated into the <strong>Pinecone vector database (Index: ifs362-hypertension)</strong>, optimized for semantic search and contextual understanding. The system automatically ingests new documents from a monitored Google Drive folder and processes them through the n8n workflow for vector storage.</li>
-
-            <li><strong>Google Gemini AI Processing</strong>: Integration with <strong>Google Gemini 2.0 Flash Experimental</strong> provides advanced language understanding capabilities. The system uses dual Gemini integrations - one for document embedding generation and another for response generation, ensuring optimal performance for both vector storage and conversational AI tasks.</li>
-
-            <li><strong>Automated Document Management</strong>: The system monitors a specific Google Drive folder (ifs362-hypertension) for new or updated documents, automatically processing them through the workflow to maintain an up-to-date knowledge base without manual intervention.</li>
-        </ol>
 
         <h4>n8n Workflow Architecture</h4>
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h5>Document Ingestion Flow:</h5>
-            <p><code>Google Drive Trigger → Download File → Default Data Loader → Text Splitter → Embeddings → Pinecone Storage</code></p>
-            
+            <p><code>Google Drive Trigger → Download File → Text Splitter → Embeddings → Pinecone Storage</code></p>
             <h5>Chat Interaction Flow:</h5>
-            <p><code>Chat Trigger → AI Agent → Vector Store Tool → Pinecone Retrieval → Gemini Response → Memory Storage</code></p>
-            
-            <h5>Key Workflow Nodes:</h5>
-            <ul>
-                <li><strong>Google Drive Triggers:</strong> Monitor for file creation and updates in the hypertension folder</li>
-                <li><strong>AI Agent:</strong> Central coordinator with specialized system prompt for hypertension guidance</li>
-                <li><strong>Vector Store Tool:</strong> Named "company_documents_tool" for retrieving relevant information</li>
-                <li><strong>Window Buffer Memory:</strong> Maintains conversation context across interactions</li>
-                <li><strong>Dual Pinecone Nodes:</strong> Separate instances for document storage and retrieval operations</li>
-            </ul>
+            <p><code>Chat Trigger → AI Agent → Pinecone Retrieval → Gemini Response → Memory Storage</code></p>
         </div>
 
         <h4>AI Agent System Configuration</h4>
-        <p>The AI Agent is configured with a comprehensive system message that establishes its role as a "friendly, knowledgeable, and supportive Health Assistant specializing in hypertension." Key behavioral guidelines include:</p>
+        <p>
+            The AI Agent is configured as a "friendly, knowledgeable, and supportive Health Assistant specializing in hypertension," with guidelines for:
+        </p>
         <ul>
-            <li>Evidence-based medical information delivery</li>
-            <li>Lifestyle and dietary recommendations (DASH diet, sodium reduction)</li>
-            <li>Blood pressure monitoring guidance and interpretation</li>
-            <li>Medication adherence support</li>
-            <li>Cultural sensitivity and South African healthcare context awareness</li>
-            <li>Clear disclaimers about educational vs. professional medical advice</li>
+            <li>Evidence-based medical information.</li>
+            <li>Lifestyle and dietary recommendations (DASH diet, sodium reduction).</li>
+            <li>Blood pressure monitoring and medication adherence.</li>
+            <li>Cultural sensitivity and alignment with South African healthcare resources.</li>
         </ul>
 
-        <h4>Key Implementation Advantages:</h4>
-        <ol>
-            <li><strong>Curated Knowledge Foundation</strong>: NotebookLM's document synthesis ensures the knowledge base contains well-structured, accessible medical information optimized for public health education.</li>
-            <li><strong>Automated Knowledge Management</strong>: The Google Drive integration with n8n triggers ensures the knowledge base stays current with minimal manual intervention, automatically processing new hypertension research and guidelines.</li>
-            <li><strong>Scalable Vector Operations</strong>: The Pinecone vector database provides fast, semantic search capabilities that can handle growing document collections while maintaining quick response times.</li>
-            <li><strong>Memory-Enhanced Conversations</strong>: Window Buffer Memory enables contextual conversations that remember previous interactions within a session, providing more coherent and personalized guidance.</li>
-            <li><strong>Modular Workflow Design</strong>: The n8n architecture allows for easy modification and expansion of capabilities without disrupting the core functionality.</li>
-            <li><strong>Cost-Effective AI Integration</strong>: Using Google Gemini provides advanced language capabilities at competitive pricing, with the flexibility to adjust model versions as needed.</li>
-        </ol>
-
-        <h3>3. EA Justification Table - Updated for Actual Implementation</h3>
+        <!-- ============================================= -->
+        <!-- 3. EA Justification Table -->
+        <!-- ============================================= -->
+        <h3>3. Enterprise Architecture Justification</h3>
         <table>
             <thead>
                 <tr>
                     <th>EA Layer</th>
-                    <th>Link to Improved Functionality</th>
-                    <th>AI Tool Used</th>
-                    <th>Application to Implemented MVP</th>
+                    <th>Improved Functionality</th>
+                    <th>AI Tools Used</th>
+                    <th>Application in MVP</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>Business</strong></td>
-                    <td><strong>Strategic Healthcare Accessibility Enhancement</strong>: The implementation directly supports HypertenCare's mission of providing free, accessible healthcare education for all South Africans. The intelligent chatbot responses better serve the 6.8 million South Africans with hypertension, particularly the 46% who are unaware of their condition. <strong>Curated Knowledge Strategy</strong>: NotebookLM-processed content ensures medical information is accessible and culturally appropriate for diverse South African communities. <strong>Automated Content Management</strong>: Google Drive integration ensures healthcare information stays current with minimal administrative overhead, supporting scalable community health impact.</td>
-                    <td><strong>Google Gemini 2.0 Flash Experimental</strong>: Provides culturally-sensitive, context-aware responses through the n8n AI Agent with specialized hypertension system prompts. <strong>NotebookLM</strong>: Curates and synthesizes medical sources into structured, accessible knowledge base content. <strong>Google Drive API</strong>: Enables automatic content curation and management of South African-specific health resources through monitored folder integration.</td>
-                    <td>The implemented MVP demonstrates business value through the live Figma site (https://ifs362-elokusa.figma.site) with functional AI responses, automated document processing from Google Drive, NotebookLM-curated knowledge base, and contextually appropriate guidance aligned with South African healthcare resources.</td>
+                    <td>
+                        <strong>Strategic Healthcare Accessibility:</strong> Supports HypertenCare’s mission of free, accessible healthcare education.<br>
+                        <strong>Curated Knowledge:</strong> NotebookLM ensures medical accuracy and cultural appropriateness.<br>
+                        <strong>Automated Updates:</strong> Google Drive integration maintains current health information.
+                    </td>
+                    <td>
+                        Google Gemini, NotebookLM, Google Drive API
+                    </td>
+                    <td>
+                        Live Figma site with AI responses, automated document processing, and contextually appropriate guidance.
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Application</strong></td>
-                    <td><strong>Workflow-Driven Intelligence</strong>: n8n workflow orchestration provides sophisticated RAG capabilities while maintaining system reliability and observability. <strong>Real-time Document Processing</strong>: Automatic ingestion and processing of new hypertension documents ensures the knowledge base remains current. <strong>Memory-Enhanced User Experience</strong>: Window Buffer Memory provides contextual conversations that remember user interactions within sessions. <strong>Structured Knowledge Integration</strong>: NotebookLM-processed content ensures consistent, well-organized information delivery through the AI system.</td>
-                    <td><strong>n8n Workflow Platform</strong>: Orchestrates the entire AI pipeline from document monitoring to response generation, providing visual workflow management and error handling. <strong>Pinecone Vector Database</strong>: Enables semantic search through processed hypertension documents with automatic embedding updates. <strong>Figma Site Integration</strong>: Provides responsive, accessible frontend that connects via webhooks to the n8n backend. <strong>NotebookLM</strong>: Processes and structures source documents for optimal knowledge base creation.</td>
-                    <td>The implemented system showcases application improvements through the fully functional workflow visible in n8n, demonstrating real-time document processing, vector storage operations, conversational AI responses with maintained context across interactions, and integration of NotebookLM-curated knowledge.</td>
+                    <td>
+                        <strong>Workflow-Driven Intelligence:</strong> n8n orchestrates RAG, document processing, and memory management.<br>
+                        <strong>Real-Time Updates:</strong> Automated ingestion of new hypertension documents.<br>
+                        <strong>Memory-Enhanced UX:</strong> Window Buffer Memory retains conversation context.
+                    </td>
+                    <td>
+                        n8n, Pinecone, Figma, NotebookLM
+                    </td>
+                    <td>
+                        Functional n8n workflow with real-time document processing, semantic search, and conversational AI.
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Data</strong></td>
-                    <td><strong>Automated Knowledge Pipeline</strong>: Google Drive monitoring with automatic document download, processing, and vector storage ensures comprehensive, up-to-date hypertension information. <strong>Curated Content Foundation</strong>: NotebookLM synthesis creates high-quality, structured knowledge base entries optimized for semantic search and retrieval. <strong>Semantic Search Capabilities</strong>: Vector embeddings enable intelligent retrieval of relevant information based on query meaning rather than keyword matching. <strong>Conversation Memory Management</strong>: Window Buffer Memory maintains interaction context while respecting privacy boundaries.</td>
-                    <td><strong>Pinecone Vector Store (ifs362-hypertension index)</strong>: Stores and retrieves vectorized hypertension information with automatic updates from Google Drive sources. <strong>Google Gemini Embeddings</strong>: Generates semantic vector representations of documents for intelligent matching and retrieval. <strong>Recursive Character Text Splitter</strong>: Optimally chunks documents for vector processing while maintaining context coherence. <strong>NotebookLM</strong>: Synthesizes and structures medical source documents into coherent, accessible knowledge base entries.</td>
-                    <td>The data layer demonstrates successful implementation through the populated Pinecone index containing NotebookLM-curated content, automated document processing pipeline, and effective semantic matching between user queries and relevant hypertension information stored in the vector database.</td>
+                    <td>
+                        <strong>Automated Knowledge Pipeline:</strong> Google Drive → NotebookLM → Pinecone.<br>
+                        <strong>Semantic Search:</strong> Vector embeddings enable context-aware retrieval.<br>
+                        <strong>Conversation Memory:</strong> Window Buffer Memory maintains session context.
+                    </td>
+                    <td>
+                        Pinecone, Google Gemini Embeddings, NotebookLM
+                    </td>
+                    <td>
+                        Populated Pinecone index with NotebookLM-curated content and effective semantic matching.
+                    </td>
                 </tr>
                 <tr>
                     <td><strong>Technology</strong></td>
-                    <td><strong>Cloud-Native AI Architecture</strong>: Integration of Google Gemini, Pinecone, and n8n provides scalable, reliable AI processing with built-in monitoring and error handling. <strong>Knowledge Curation Technology</strong>: NotebookLM integration demonstrates advanced document synthesis capabilities for creating high-quality knowledge bases. <strong>Webhook-Driven Communication</strong>: Figma site integration via n8n chat triggers enables real-time user interaction without complex infrastructure management. <strong>Automated DevOps Pipeline</strong>: n8n workflow provides built-in monitoring, logging, and error handling for the entire AI pipeline.</td>
-                    <td><strong>n8n Automation Platform</strong>: Provides the core orchestration layer with visual workflow management, built-in integrations, and scalable cloud execution. <strong>Google Gemini API</strong>: Delivers advanced language model capabilities through both embedding generation and conversational AI services. <strong>Google Drive API</strong>: Enables automated document management and monitoring for continuous knowledge base updates. <strong>NotebookLM</strong>: Advanced AI-powered document synthesis and knowledge curation platform.</td>
-                    <td>The technology implementation demonstrates successful integration of multiple cloud services and AI platforms through n8n workflows, maintaining high availability and performance while providing clear observability into system operations, AI response generation processes, and NotebookLM-enhanced content curation.</td>
+                    <td>
+                        <strong>Cloud-Native AI:</strong> Scalable integration of Gemini, Pinecone, and n8n.<br>
+                        <strong>Knowledge Curation:</strong> NotebookLM synthesizes high-quality content.<br>
+                        <strong>Webhook Communication:</strong> Figma ↔ n8n for real-time interaction.
+                    </td>
+                    <td>
+                        n8n, Google Gemini API, Google Drive API, NotebookLM
+                    </td>
+                    <td>
+                        High availability, observable AI pipeline with automated DevOps and knowledge curation.
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <h3>4. Updated Implementation Status</h3>
-        
+        <!-- ============================================= -->
+        <!-- 4. Agile Sprint Plan -->
+        <!-- ============================================= -->
+        <h3>4. Agile Sprint Plan - Implementation</h3>
+        <p>
+            The project followed a 2-day sprint cycle, focusing on iterative development and continuous feedback. The actual implementation used <strong>n8n, NotebookLM, Google Gemini, Pinecone, and Figma</strong>.
+        </p>
+
         <div class="workflow-highlight">
-            <h4>✅ Completed Implementation</h4>
-            <p><strong>MVP Status:</strong> Fully Deployed and Functional</p>
-            <p><strong>Frontend URL:</strong> <a href="https://ifs362-elokusa.figma.site" target="_blank">https://ifs362-elokusa.figma.site</a></p>
-            <p><strong>Backend:</strong> n8n Workflow Active and Processing</p>
-            <p><strong>Vector Database:</strong> Pinecone Index Populated with NotebookLM-Curated Hypertension Content</p>
-            <p><strong>Knowledge Foundation:</strong> NotebookLM-Processed Medical Sources Integrated</p>
+            <h4>🚀 Sprint Breakdown</h4>
+            <p><strong>Methodology:</strong> 2-day sprints with rapid prototyping and testing.</p>
         </div>
 
-        <h4>Implementation Achievement Summary:</h4>
         <table>
             <thead>
                 <tr>
-                    <th>Component</th>
-                    <th>Status</th>
-                    <th>Technology Used</th>
-                    <th>Functionality Achieved</th>
+                    <th>Sprint</th>
+                    <th>Day</th>
+                    <th>Task</th>
+                    <th>AI Tools</th>
+                    <th>Output</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Frontend Interface</td>
-                    <td>✅ Deployed</td>
-                    <td>Figma Site</td>
-                    <td>Responsive chat interface with accessibility features preserved from original platform</td>
+                    <td rowspan="2"><strong>Sprint 1: Knowledge Foundation & Document Ingestion</strong></td>
+                    <td>Day 1</td>
+                    <td>Curate hypertension knowledge using NotebookLM (WHO guidelines, SA health resources).</td>
+                    <td>NotebookLM, Google Drive</td>
+                    <td>Structured knowledge base ready for vectorization.</td>
                 </tr>
                 <tr>
-                    <td>Backend Workflow</td>
-                    <td>✅ Active</td>
-                    <td>n8n Platform</td>
-                    <td>Complete RAG pipeline with document monitoring, vector storage, and AI response generation</td>
+                    <td>Day 2</td>
+                    <td>
+                        Initialize Pinecone. Develop n8n workflow to:
+                        <ul>
+                            <li>Monitor Google Drive for new/updated documents.</li>
+                            <li>Process documents with Recursive Character Text Splitter.</li>
+                            <li>Generate embeddings using Google Gemini.</li>
+                            <li>Populate Pinecone index (<code>ifs362-hypertension</code>).</li>
+                        </ul>
+                    </td>
+                    <td>n8n, Pinecone, Google Gemini</td>
+                    <td>Pinecone index populated with vectorized health data.</td>
                 </tr>
                 <tr>
-                    <td>Knowledge Curation</td>
-                    <td>✅ Integrated</td>
-                    <td>NotebookLM</td>
-                    <td>Synthesized medical sources into structured, accessible knowledge base content</td>
+                    <td rowspan="2"><strong>Sprint 2: Backend RAG Logic & AI Integration</strong></td>
+                    <td>Day 3</td>
+                    <td>
+                        Build n8n workflow for RAG:
+                        <ul>
+                            <li>Query processing and Pinecone retrieval.</li>
+                            <li>Prompt construction for Google Gemini.</li>
+                            <li>Configure AI Agent with hypertension-specific system prompt.</li>
+                        </ul>
+                    </td>
+                    <td>n8n, Pinecone, Google Gemini</td>
+                    <td>Functional RAG backend with context-aware responses.</td>
                 </tr>
                 <tr>
-                    <td>Document Processing</td>
-                    <td>✅ Automated</td>
-                    <td>Google Drive API + n8n Triggers</td>
-                    <td>Automatic ingestion and processing of new hypertension documents</td>
+                    <td>Day 4</td>
+                    <td>
+                        Integrate AI Agent with Window Buffer Memory. Test with sample queries and refine prompts.
+                    </td>
+                    <td>n8n, Google Gemini</td>
+                    <td>Backend generates personalized, evidence-based responses.</td>
                 </tr>
                 <tr>
-                    <td>Vector Database</td>
-                    <td>✅ Populated</td>
-                    <td>Pinecone (ifs362-hypertension)</td>
-                    <td>Semantic search through NotebookLM-processed hypertension knowledge base</td>
+                    <td rowspan="2"><strong>Sprint 3: Frontend Integration & UI</strong></td>
+                    <td>Day 5</td>
+                    <td>Build Figma chat interface with webhook connection to n8n backend.</td>
+                    <td>Figma, n8n</td>
+                    <td>Basic chat interface with real-time backend communication.</td>
                 </tr>
                 <tr>
-                    <td>AI Processing</td>
-                    <td>✅ Functional</td>
-                    <td>Google Gemini 2.0 Flash</td>
-                    <td>Context-aware responses with hypertension specialization and memory retention</td>
+                    <td>Day 6</td>
+                    <td>Finalize UI/UX, implement response streaming, and add error handling.</td>
+                    <td>Figma, n8n</td>
+                    <td>Fully connected, responsive chat interface.</td>
                 </tr>
                 <tr>
-                    <td>Memory System</td>
-                    <td>✅ Integrated</td>
-                    <td>n8n Window Buffer Memory</td>
-                    <td>Conversation context maintenance across user interactions</td>
+                    <td rowspan="2"><strong>Sprint 4: Testing, Refinement & Deployment</strong></td>
+                    <td>Day 7</td>
+                    <td>End-to-end testing with diverse user scenarios. Implement error handling for edge cases.</td>
+                    <td>n8n, Manual Testing</td>
+                    <td>Robust system with error handling and test results.</td>
+                </tr>
+                <tr>
+                    <td>Day 8</td>
+                    <td>Refine UI/UX based on feedback. Deploy MVP and monitor n8n workflow.</td>
+                    <td>Figma, n8n</td>
+                    <td>
+                        <strong>MVP Deployed:</strong>
+                        <a href="https://ifs362-elokusa.figma.site" target="_blank">https://ifs362-elokusa.figma.site</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <h4>How the Implemented AI System Improves the Original Solution:</h4>
-        <p>The n8n-based implementation fundamentally transforms the HypertenCare chatbot from a static, rule-based system into a dynamic, intelligent, and context-aware health assistant. The implemented system addresses the original limitations through:</p>
+        <div class="success-box">
+            <h4>✅ Implementation Status</h4>
+            <p><strong>Frontend:</strong> <a href="https://ifs362-elokusa.figma.site" target="_blank">Live Figma Site</a></p>
+            <p><strong>Backend:</strong> n8n workflow active, processing queries in real-time.</p>
+            <p><strong>Knowledge Base:</strong> Pinecone index populated with NotebookLM-curated content.</p>
+            <p><strong>Automation:</strong> Google Drive integration for continuous updates.</p>
+        </div>
+
+        <h4>Key Achievements per Sprint</h4>
         <ul>
-            <li><strong>NotebookLM-Enhanced Knowledge Foundation:</strong> The systematic curation of medical sources through NotebookLM ensures the chatbot has access to well-structured, accessible hypertension information optimized for public health education.</li>
-            <li><strong>Automated Semantic Understanding:</strong> The Pinecone vector database with Google Gemini embeddings allows the chatbot to understand the <em>meaning</em> behind user questions, automatically retrieving relevant information from the continuously updated, NotebookLM-curated hypertension knowledge base.</li>
-            <li><strong>Workflow-Driven Personalization:</strong> The n8n AI Agent with Window Buffer Memory provides personalized guidance that maintains context across conversations, offering tailored advice based on user interactions and retrieved hypertension knowledge.</li>
-            <li><strong>Continuous Knowledge Updates:</strong> Google Drive integration with automated n8n triggers ensures the system stays current with the latest hypertension research and South African healthcare guidelines without manual intervention.</li>
-            <li><strong>Scalable, Maintainable Architecture:</strong> The n8n workflow provides visual management, built-in error handling, and easy modification capabilities, ensuring the system can evolve and scale as needed.</li>
+            <li><strong>Sprint 1:</strong> Established a curated knowledge base using NotebookLM.</li>
+            <li><strong>Sprint 2:</strong> Built a functional RAG pipeline in n8n with Pinecone and Gemini.</li>
+            <li><strong>Sprint 3:</strong> Created a seamless Figma frontend with webhook integration.</li>
+            <li><strong>Sprint 4:</strong> Deployed a fully functional MVP with automated error handling.</li>
         </ul>
 
-        <h4>Integration of NotebookLM, Google Gemini and n8n in the Architecture:</h4>
-        <p><strong>NotebookLM</strong> serves as the foundational knowledge curation layer, processing and synthesizing medical sources (WHO guidelines, health fact sheets, research papers) into structured, accessible content specifically designed for public health education. This curated content forms the high-quality knowledge base that feeds into the vector database.</p>
+        <!-- ============================================= -->
+        <!-- 5. How AI Improves the Original Solution -->
+        <!-- ============================================= -->
+        <h3>5. AI Enhancements Over Original Chatbot</h3>
+        <p>
+            The new architecture addresses the original limitations by:
+        </p>
+        <ul>
+            <li>
+                <strong>NotebookLM Knowledge Curation:</strong>
+                Ensures high-quality, structured, and culturally sensitive content.
+            </li>
+            <li>
+                <strong>Semantic Understanding:</strong>
+                Pinecone and Google Gemini enable context-aware responses beyond keyword matching.
+            </li>
+            <li>
+                <strong>Personalized Guidance:</strong>
+                Window Buffer Memory and RAG provide tailored advice based on user context.
+            </li>
+            <li>
+                <strong>Automated Updates:</strong>
+                Google Drive integration keeps the knowledge base current.
+            </li>
+            <li>
+                <strong>Transparency:</strong>
+                n8n workflows provide visibility into AI decision-making, addressing the "black box" issue.
+            </li>
+        </ul>
 
-        <p><strong>Google Gemini 2.0 Flash Experimental</strong> serves as the core language model, integrated into the n8n workflow through two specialized nodes: one for generating document embeddings during the ingestion process, and another for generating conversational responses. The AI Agent node in n8n orchestrates these interactions, using a specialized system prompt that defines the assistant's role as a hypertension health advisor with cultural sensitivity for South African contexts.</p>
+        <h4>Integration of NotebookLM, Google Gemini, and n8n</h4>
+        <p>
+            <strong>NotebookLM</strong> curates and structures medical sources into a high-quality knowledge base.<br>
+            <strong>Google Gemini</strong> powers semantic search (embeddings) and conversational responses.<br>
+            <strong>n8n</strong> orchestrates the entire pipeline, from document ingestion to user interaction, with built-in monitoring and scalability.
+        </p>
 
-        <p><strong>n8n Workflow Platform</strong> acts as the central orchestration layer, managing the entire AI pipeline from document monitoring to user response generation. Its visual workflow interface provides transparency into the AI operations, making the system maintainable and allowing for easy debugging and optimization. The platform's built-in integrations with Google services and Pinecone eliminate the need for custom API management, while its trigger-based architecture ensures efficient resource utilization.</p>
-
-        <p>This implementation demonstrates that sophisticated AI capabilities can be achieved through workflow automation platforms combined with advanced knowledge curation tools, providing enterprise-grade functionality while maintaining the accessibility and cultural sensitivity required for South African healthcare applications.</p>
-          
-        <h4>Architecture Diagram</h4>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HypertenCare Enhanced Architecture</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f7fa;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .title {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .architecture-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .layer {
-            width: 100%;
-            max-width: 900px;
-            min-height: 120px;
-            border: 2px solid #dee2e6;
-            border-radius: 12px;
-            padding: 20px;
-            position: relative;
-        }
-
-        .layer-title {
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: white;
-            padding: 0 10px;
-            font-weight: bold;
-            font-size: 14px;
-            color: #495057;
-        }
-
-        .business-layer {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border-color: #28a745;
-        }
-
-        .business-layer .layer-title {
-            color: #28a745;
-        }
-
-        .application-layer {
-            background: linear-gradient(135deg, #cce5ff 0%, #b3d9ff 100%);
-            border-color: #007bff;
-        }
-
-        .application-layer .layer-title {
-            color: #007bff;
-        }
-
-        .data-layer {
-            background: linear-gradient(135deg, #f0e6ff 0%, #e6ccff 100%);
-            border-color: #6f42c1;
-        }
-
-        .data-layer .layer-title {
-            color: #6f42c1;
-        }
-
-        .technology-layer {
-            background: linear-gradient(135deg, #ffe6cc 0%, #ffd9b3 100%);
-            border-color: #fd7e14;
-        }
-
-        .technology-layer .layer-title {
-            color: #fd7e14;
-        }
-
-        .nodes-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .node {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            min-width: 160px;
-            max-width: 180px;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 1.3;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .node:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            border-color: #007bff;
-        }
-
-        .node-title {
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .node-subtitle {
-            color: #6c757d;
-            font-size: 10px;
-        }
-
-        .flow-arrow {
-            font-size: 24px;
-            color: #6c757d;
-            margin: -10px 0;
-        }
-
-        .main-flow {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 30px;
-        }
-
-        .main-node {
-            background: white;
-            border: 3px solid #007bff;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            width: 200px;
-            font-weight: 600;
-            color: #2c3e50;
-            box-shadow: 0 4px 12px rgba(0,123,255,0.2);
-        }
-
-        .integration-flows {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .integration-arrow {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #6c757d;
-        }
-
-        .legend {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-        }
-
-        .legend h4 {
-            margin-top: 0;
-            color: #495057;
-        }
-
-        .legend-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            border: 1px solid #dee2e6;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            
-            .nodes-container {
-                justify-content: center;
-            }
-            
-            .node {
-                min-width: 140px;
-                max-width: 160px;
-                padding: 12px;
-            }
-            
-            .main-node {
-                width: 180px;
-                padding: 15px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 class="title">HypertenCare Enhanced Architecture Flow</h1>
-        
-        <div class="architecture-flow">
-            
-            <!-- Main User Flow -->
-            <div class="main-flow">
-                <div class="main-node" style="border-color: #e1f5fe; background: #e1f5fe;">
-                    <div class="node-title">User Interface</div>
-                    <div class="node-subtitle">Existing HypertenCare Platform<br>Multi-language Support</div>
-                </div>
-                
-                <div class="flow-arrow">↓</div>
-                
-                <div class="main-node" style="border-color: #fff3e0; background: #fff3e0;">
-                    <div class="node-title">Enhanced Chatbot</div>
-                    <div class="node-subtitle">AI-Powered Interface<br>Preserving Current UX</div>
-                </div>
-                
-                <div class="flow-arrow">↓</div>
-                
-                <div class="main-node" style="border-color: #fff3e0; background: #fff3e0;">
-                    <div class="node-title">Context Processing</div>
-                    <div class="node-subtitle">Assessment Integration<br>Cultural Awareness</div>
-                </div>
-                
-                <div class="flow-arrow">↓</div>
-                
-                <div class="main-node" style="border-color: #e8f5e8; background: #e8f5e8;">
-                    <div class="node-title">AI Response</div>
-                    <div class="node-subtitle">Culturally-Sensitive<br>Resource-Aware Guidance</div>
-                </div>
-            </div>
-
-            <!-- Business Layer -->
-            <div class="layer business-layer">
-                <div class="layer-title">Business Layer - SA Healthcare Goals</div>
-                <div class="nodes-container">
-                    <div class="node">
-                        <div class="node-title">Free Healthcare Access</div>
-                        <div class="node-subtitle">NHI Alignment & Public Clinic Integration</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Community Health Support</div>
-                        <div class="node-subtitle">Health Worker Programs & Local Resources</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Multilingual Accessibility</div>
-                        <div class="node-subtitle">11 Official Languages & Cultural Sensitivity</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Application Layer -->
-            <div class="layer application-layer">
-                <div class="layer-title">Application Layer - Enhanced Intelligence</div>
-                <div class="nodes-container">
-                    <div class="node">
-                        <div class="node-title">Query Analysis</div>
-                        <div class="node-subtitle">Intelligent processing with cultural context awareness</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Response Generation</div>
-                        <div class="node-subtitle">Contextual AI responses using retrieved SA health data</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Medical Validation</div>
-                        <div class="node-subtitle">Accuracy checking against SA healthcare standards</div>
-                    </div>
-                </div>
-                
-                <div class="integration-flows">
-                    <div class="integration-arrow">
-                        <span>Assessment Results</span> → <span>Personalized Context</span>
-                    </div>
-                    <div class="integration-arrow">
-                        <span>Educational Games</span> → <span>Learning Integration</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Data Layer -->
-            <div class="layer data-layer">
-                <div class="layer-title">Data Layer - SA Healthcare Context</div>
-                <div class="nodes-container">
-                    <div class="node">
-                        <div class="node-title">Vector Knowledge Base</div>
-                        <div class="node-subtitle">Pinecone storage of SA-specific health information</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Assessment Tools</div>
-                        <div class="node-subtitle">15-Question Risk Assessment & User Profiles</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Clinic Directory</div>
-                        <div class="node-subtitle">3,500+ SA Healthcare Locations</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Emergency Resources</div>
-                        <div class="node-subtitle">10177 Emergency & Health Hotlines</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Educational Content</div>
-                        <div class="node-subtitle">BP Simulator & Interactive Learning Games</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Technology Layer -->
-            <div class="layer technology-layer">
-                <div class="layer-title">Technology Layer - AI Integration</div>
-                <div class="nodes-container">
-                    <div class="node">
-                        <div class="node-title">LLM Processing</div>
-                        <div class="node-subtitle">OpenRouter/Gemini APIs for natural language understanding</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Vector Database</div>
-                        <div class="node-subtitle">Pinecone semantic search & retrieval system</div>
-                    </div>
-                    <div class="node">
-                        <div class="node-title">Platform Infrastructure</div>
-                        <div class="node-subtitle">Mobile-optimized, accessible web platform</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Legend -->
-        <div class="legend">
-            <h4>Architecture Enhancement Summary</h4>
-            <div class="legend-grid">
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #e1f5fe;"></div>
-                    <span>User Interface Layer - Existing platform preserved</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #fff3e0;"></div>
-                    <span>Enhanced Processing - AI-powered improvements</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #f3e5f5;"></div>
-                    <span>Data Storage - SA-specific health information</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: #e8f5e8;"></span>
-                    <span>AI Technology - LLMs and semantic search</span>
-                </div>
-            </div>
-            
-            <p style="margin-top: 15px; font-size: 12px; color: #6c757d;">
-                <strong>Key Enhancement:</strong> The architecture adds intelligent semantic search and contextual AI processing to the existing successful HypertenCare platform, maintaining accessibility while improving response accuracy and cultural sensitivity for South African healthcare contexts.
-            </p>
-        </div>
-    </div>
-
-    <script>
-        // Add click functionality for detailed information
-        document.querySelectorAll('.node').forEach(node => {
-            node.addEventListener('click', function() {
-                const title = this.querySelector('.node-title').textContent;
-                const subtitle = this.querySelector('.node-subtitle').textContent;
-                alert(`${title}\n\n${subtitle}\n\nThis component integrates with HypertenCare's existing platform to enhance AI capabilities while preserving accessibility and cultural sensitivity.`);
-            });
-        });
-    </script>
-</body>
-</html>
-        <h3>5. Enhanced Architecture Visualization with Key Improvements</h3>
-        
-        <div style="margin: 20px 0;">
-            <canvas id="detailedArchChart" width="1000" height="700" style="max-width: 100%; border: 1px solid #ddd;"></canvas>
-        </div>
-        
-        <div style="margin: 20px 0;">
-            <canvas id="enhancementFlowChart" width="1000" height="600" style="max-width: 100%; border: 1px solid #ddd;"></canvas>
-        </div>
-
-        <script>
-            // Detailed Architecture Chart with Key Enhancements
-            const detailedCanvas = document.getElementById('detailedArchChart');
-            const detailedCtx = detailedCanvas.getContext('2d');
-            
-            // Clear canvas
-            detailedCtx.fillStyle = '#f8f9fa';
-            detailedCtx.fillRect(0, 0, 1000, 700);
-            
-            // Title
-            detailedCtx.fillStyle = '#2c3e50';
-            detailedCtx.font = 'bold 24px Arial';
-            detailedCtx.textAlign = 'center';
-            detailedCtx.fillText('HypertenCare Enhanced Architecture - Key AI Improvements', 500, 30);
-            
-            // Main User Flow
-            const mainFlow = [
-                { name: 'User Interface\n(Figma Site)', x: 150, y: 100, color: '#e1f5fe', width: 140, height: 70 },
-                { name: 'n8n Workflow\nOrchestration', x: 500, y: 100, color: '#fff3e0', width: 140, height: 70 },
-                { name: 'Google Gemini\nAI Processing', x: 850, y: 100, color: '#e8f5e8', width: 140, height: 70 }
-            ];
-            
-            // Draw main flow
-            mainFlow.forEach((node, i) => {
-                // Node background
-                detailedCtx.fillStyle = node.color;
-                detailedCtx.fillRect(node.x - node.width/2, node.y - node.height/2, node.width, node.height);
-                detailedCtx.strokeStyle = '#007bff';
-                detailedCtx.lineWidth = 3;
-                detailedCtx.strokeRect(node.x - node.width/2, node.y - node.height/2, node.width, node.height);
-                
-                // Node text
-                detailedCtx.fillStyle = '#2c3e50';
-                detailedCtx.font = 'bold 14px Arial';
-                detailedCtx.textAlign = 'center';
-                const lines = node.name.split('\n');
-                lines.forEach((line, lineIndex) => {
-                    detailedCtx.fillText(line, node.x, node.y - 10 + (lineIndex * 16));
-                });
-                
-                // Draw arrows between main flow nodes
-                if (i < mainFlow.length - 1) {
-                    const nextNode = mainFlow[i + 1];
-                    detailedCtx.strokeStyle = '#6c757d';
-                    detailedCtx.lineWidth = 4;
-                    detailedCtx.beginPath();
-                    detailedCtx.moveTo(node.x + node.width/2, node.y);
-                    detailedCtx.lineTo(nextNode.x - nextNode.width/2, nextNode.y);
-                    detailedCtx.stroke();
-                    
-                    // Arrow head
-                    const arrowX = nextNode.x - nextNode.width/2;
-                    const arrowY = nextNode.y;
-                    detailedCtx.beginPath();
-                    detailedCtx.moveTo(arrowX, arrowY);
-                    detailedCtx.lineTo(arrowX - 15, arrowY - 8);
-                    detailedCtx.lineTo(arrowX - 15, arrowY + 8);
-                    detailedCtx.closePath();
-                    detailedCtx.fillStyle = '#6c757d';
-                    detailedCtx.fill();
-                }
-            });
-            
-            // Supporting Components
-            const supportingComponents = [
-                { name: 'NotebookLM\nKnowledge Curation', x: 150, y: 250, color: '#e8f5e8', width: 140, height: 70, enhancement: 'NEW: Structured Medical Content' },
-                { name: 'Pinecone Vector\nDatabase', x: 500, y: 250, color: '#f3e5f5', width: 140, height: 70, enhancement: 'ENHANCED: Semantic Search' },
-                { name: 'Google Drive\nDocument Source', x: 850, y: 250, color: '#fff3e0', width: 140, height: 70, enhancement: 'NEW: Automated Updates' },
-                { name: 'Window Buffer\nMemory', x: 150, y: 400, color: '#ffe6cc', width: 140, height: 70, enhancement: 'NEW: Context Retention' },
-                { name: 'SA Healthcare\nKnowledge Base', x: 500, y: 400, color: '#d4edda', width: 140, height: 70, enhancement: 'CURATED: Local Resources' },
-                { name: 'Assessment Tool\nIntegration', x: 850, y: 400, color: '#f8d7da', width: 140, height: 70, enhancement: 'ENHANCED: Personalization' }
-            ];
-            
-            // Draw supporting components
-            supportingComponents.forEach(comp => {
-                // Component background
-                detailedCtx.fillStyle = comp.color;
-                detailedCtx.fillRect(comp.x - comp.width/2, comp.y - comp.height/2, comp.width, comp.height);
-                detailedCtx.strokeStyle = '#6c757d';
-                detailedCtx.lineWidth = 2;
-                detailedCtx.strokeRect(comp.x - comp.width/2, comp.y - comp.height/2, comp.width, comp.height);
-                
-                // Component text
-                detailedCtx.fillStyle = '#2c3e50';
-                detailedCtx.font = 'bold 12px Arial';
-                detailedCtx.textAlign = 'center';
-                const lines = comp.name.split('\n');
-                lines.forEach((line, i) => {
-                    detailedCtx.fillText(line, comp.x, comp.y - 15 + (i * 14));
-                });
-                
-                // Enhancement label
-                detailedCtx.fillStyle = '#dc3545';
-                detailedCtx.font = 'bold 10px Arial';
-                detailedCtx.fillText(comp.enhancement, comp.x, comp.y + comp.height/2 + 15);
-            });
-            
-            // Draw connections between components
-            const connections = [
-                [0, 1], [1, 2], [3, 1], [1, 4], [4, 5] // Index based connections
-            ];
-            
-            connections.forEach(([fromIdx, toIdx]) => {
-                const fromComp = supportingComponents[fromIdx];
-                const toComp = supportingComponents[toIdx];
-                
-                detailedCtx.strokeStyle = '#adb5bd';
-                detailedCtx.lineWidth = 2;
-                detailedCtx.setLineDash([5, 5]);
-                detailedCtx.beginPath();
-                detailedCtx.moveTo(fromComp.x, fromComp.y);
-                detailedCtx.lineTo(toComp.x, toComp.y);
-                detailedCtx.stroke();
-                detailedCtx.setLineDash([]);
-            });
-            
-            // Key Enhancements Box
-            detailedCtx.fillStyle = '#ffffff';
-            detailedCtx.fillRect(50, 520, 900, 150);
-            detailedCtx.strokeStyle = '#007bff';
-            detailedCtx.lineWidth = 3;
-            detailedCtx.strokeRect(50, 520, 900, 150);
-            
-            detailedCtx.fillStyle = '#007bff';
-            detailedCtx.font = 'bold 16px Arial';
-            detailedCtx.textAlign = 'left';
-            detailedCtx.fillText('KEY ENHANCEMENTS OVER ORIGINAL WOTNOT PLATFORM:', 70, 545);
-            
-            const enhancements = [
-                '1. NotebookLM Knowledge Curation: Structured medical content synthesis from trusted sources',
-                '2. Semantic Vector Search: Context-aware information retrieval vs. keyword matching',
-                '3. Automated Document Management: Real-time updates from Google Drive integration',
-                '4. Conversation Memory: Context retention across user sessions for personalized guidance',
-                '5. SA Healthcare Integration: Local clinic directories and culturally-sensitive responses',
-                '6. Transparent AI Pipeline: Full visibility and control over AI decision-making process'
-            ];
-            
-            detailedCtx.fillStyle = '#2c3e50';
-            detailedCtx.font = '12px Arial';
-            enhancements.forEach((enhancement, i) => {
-                detailedCtx.fillText(enhancement, 70, 565 + (i * 18));
-            });
-            
-            // Enhancement Flow Chart
-            const flowCanvas = document.getElementById('enhancementFlowChart');
-            const flowCtx = flowCanvas.getContext('2d');
-            
-            // Clear canvas
-            flowCtx.fillStyle = '#f8f9fa';
-            flowCtx.fillRect(0, 0, 1000, 600);
-            
-            // Title
-            flowCtx.fillStyle = '#2c3e50';
-            flowCtx.font = 'bold 22px Arial';
-            flowCtx.textAlign = 'center';
-            flowCtx.fillText('AI Enhancement Flow - From Query to Intelligent Response', 500, 30);
-            
-            // Flow steps with enhancements
-            const flowSteps = [
-                { 
-                    name: 'User Query Input', 
-                    x: 100, 
-                    y: 100, 
-                    color: '#e1f5fe', 
-                    improvement: 'PRESERVED:\nMultilingual Support\n11 SA Languages' 
-                },
-                { 
-                    name: 'n8n Workflow Trigger', 
-                    x: 300, 
-                    y: 100, 
-                    color: '#fff3e0', 
-                    improvement: 'NEW:\nWebhook Integration\nReal-time Processing' 
-                },
-                { 
-                    name: 'Vector Embedding\nGeneration', 
-                    x: 500, 
-                    y: 100, 
-                    color: '#e8f5e8', 
-                    improvement: 'NEW:\nSemantic Understanding\nGoogle Gemini Embeddings' 
-                },
-                { 
-                    name: 'Pinecone Semantic\nSearch', 
-                    x: 700, 
-                    y: 100, 
-                    color: '#f3e5f5', 
-                    improvement: 'ENHANCED:\nContext-Aware Retrieval\nSA Health Knowledge' 
-                },
-                { 
-                    name: 'Context Assembly\n& Prompt Engineering', 
-                    x: 900, 
-                    y: 100, 
-                    color: '#ffe6cc', 
-                    improvement: 'NEW:\nIntelligent Context\nCultural Sensitivity' 
-                },
-                { 
-                    name: 'AI Response\nGeneration', 
-                    x: 900, 
-                    y: 300, 
-                    color: '#e8f5e8', 
-                    improvement: 'ENHANCED:\nPersonalized Guidance\nEvidence-Based' 
-                },
-                { 
-                    name: 'Memory Storage\n& Context Update', 
-                    x: 700, 
-                    y: 300, 
-                    color: '#d4edda', 
-                    improvement: 'NEW:\nConversation Context\nSession Memory' 
-                },
-                { 
-                    name: 'Response Delivery\nto User', 
-                    x: 500, 
-                    y: 300, 
-                    color: '#e1f5fe', 
-                    improvement: 'ENHANCED:\nActionable Advice\nResource Integration' 
-                },
-                { 
-                    name: 'User Feedback\n& Assessment Link', 
-                    x: 300, 
-                    y: 300, 
-                    color: '#f8d7da', 
-                    improvement: 'INTEGRATED:\nRisk Assessment\nPersonalized Follow-up' 
-                },
-                { 
-                    name: 'Continuous\nLearning Loop', 
-                    x: 100, 
-                    y: 300, 
-                    color: '#fff3e0', 
-                    improvement: 'NEW:\nKnowledge Updates\nPerformance Monitoring' 
-                }
-            ];
-            
-            // Draw flow steps
-            flowSteps.forEach((step, i) => {
-                // Step background
-                flowCtx.fillStyle = step.color;
-                flowCtx.fillRect(step.x - 80, step.y - 40, 160, 80);
-                flowCtx.strokeStyle = '#007bff';
-                flowCtx.lineWidth = 2;
-                flowCtx.strokeRect(step.x - 80, step.y - 40, 160, 80);
-                
-                // Step text
-                flowCtx.fillStyle = '#2c3e50';
-                flowCtx.font = 'bold 11px Arial';
-                flowCtx.textAlign = 'center';
-                const lines = step.name.split('\n');
-                lines.forEach((line, lineIndex) => {
-                    flowCtx.fillText(line, step.x, step.y - 8 + (lineIndex * 12));
-                });
-                
-                // Improvement text
-                flowCtx.fillStyle = '#dc3545';
-                flowCtx.font = 'bold 9px Arial';
-                const improvements = step.improvement.split('\n');
-                improvements.forEach((improvement, impIndex) => {
-                    flowCtx.fillText(improvement, step.x, step.y + 55 + (impIndex * 10));
-                });
-            });
-            
-            // Draw flow arrows
-            const flowConnections = [
-                [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9], [9, 0]
-            ];
-            
-            flowConnections.forEach(([fromIdx, toIdx]) => {
-                const from = flowSteps[fromIdx];
-                const to = flowSteps[toIdx];
-                
-                flowCtx.strokeStyle = '#6c757d';
-                flowCtx.lineWidth = 3;
-                flowCtx.beginPath();
-                
-                // Special handling for curved arrows
-                if (fromIdx === 4 && toIdx === 5) { // Down arrow
-                    flowCtx.moveTo(from.x, from.y + 40);
-                    flowCtx.lineTo(to.x, to.y - 40);
-                } else if (fromIdx === 9 && toIdx === 0) { // Bottom to top connection
-                    flowCtx.moveTo(from.x, from.y - 40);
-                    flowCtx.lineTo(from.x - 50, from.y - 80);
-                    flowCtx.lineTo(to.x - 50, to.y + 80);
-                    flowCtx.lineTo(to.x, to.y + 40);
-                } else {
-                    // Regular horizontal arrows
-                    if (from.y === to.y) {
-                        if (from.x < to.x) {
-                            flowCtx.moveTo(from.x + 80, from.y);
-                            flowCtx.lineTo(to.x - 80, to.y);
-                        } else {
-                            flowCtx.moveTo(from.x - 80, from.y);
-                            flowCtx.lineTo(to.x + 80, to.y);
-                        }
-                    }
-                }
-                
-                flowCtx.stroke();
-                
-                // Add arrow heads
-                if (fromIdx !== 9 || toIdx !== 0) { // Skip arrow head for the curved connection
-                    let arrowX, arrowY, angle;
-                    if (fromIdx === 4 && toIdx === 5) {
-                        arrowX = to.x;
-                        arrowY = to.y - 40;
-                        angle = Math.PI / 2;
-                    } else if (from.x < to.x) {
-                        arrowX = to.x - 80;
-                        arrowY = to.y;
-                        angle = 0;
-                    } else {
-                        arrowX = to.x + 80;
-                        arrowY = to.y;
-                        angle = Math.PI;
-                    }
-                    
-                    flowCtx.beginPath();
-                    flowCtx.moveTo(arrowX, arrowY);
-                    flowCtx.lineTo(arrowX - 12 * Math.cos(angle - Math.PI/6), arrowY - 12 * Math.sin(angle - Math.PI/6));
-                    flowCtx.lineTo(arrowX - 12 * Math.cos(angle + Math.PI/6), arrowY - 12 * Math.sin(angle + Math.PI/6));
-                    flowCtx.closePath();
-                    flowCtx.fillStyle = '#6c757d';
-                    flowCtx.fill();
-                }
-            });
-            
-            // Benefits summary box
-            flowCtx.fillStyle = '#ffffff';
-            flowCtx.fillRect(50, 450, 900, 120);
-            flowCtx.strokeStyle = '#28a745';
-            flowCtx.lineWidth = 3;
-            flowCtx.strokeRect(50, 450, 900, 120);
-            
-            flowCtx.fillStyle = '#28a745';
-            flowCtx.font = 'bold 16px Arial';
-            flowCtx.textAlign = 'left';
-            flowCtx.fillText('TRANSFORMATION BENEFITS - FROM BLACK BOX TO TRANSPARENT AI:', 70, 475);
-            
-            const benefits = [
-                '• Complete control over knowledge sources and AI behavior (vs. WotNot black box)',
-                '• Semantic understanding of complex medical queries (vs. keyword matching)',
-                '• Automatic integration with SA healthcare resources and cultural context',
-                '• Continuous learning from curated medical sources with transparent provenance'
-            ];
-            
-            flowCtx.fillStyle = '#2c3e50';
-            flowCtx.font = '12px Arial';
-            benefits.forEach((benefit, i) => {
-                flowCtx.fillText(benefit, 70, 495 + (i * 18));
-            });
-        </script>
-
+        <!-- ============================================= -->
+        <!-- 6. Ethical & Societal Considerations -->
+        <!-- ============================================= -->
         <h3>6. Ethical & Societal Considerations</h3>
-        <p>The implemented healthcare AI system operates under a comprehensive ethical framework that governs both its technical architecture and operational practices:</p>
         <ul>
-            <li><strong>Safety & Accuracy Through Curated Knowledge</strong>: NotebookLM's systematic processing of medical sources ensures the knowledge base contains verified, well-structured hypertension information. The RAG architecture ensures all responses are grounded in this curated content, with the AI Agent configured to provide evidence-based information while clearly disclaiming that it cannot replace professional medical advice.</li>
-            <li><strong>Privacy Protection in Cloud Architecture</strong>: User interactions are processed through webhook-triggered workflows that maintain privacy by design. Conversation memory is session-based through Window Buffer Memory, ensuring personal information doesn't persist inappropriately. All integrations comply with relevant data protection standards.</li>
-            <li><strong>Bias Mitigation Through Structured Curation</strong>: NotebookLM's content synthesis process allows for active review and curation of source materials to ensure representation of diverse South African communities and healthcare contexts. The AI Agent's system prompt specifically includes cultural sensitivity guidelines for South African healthcare delivery.</li>
-            <li><strong>Transparency Through Visual Workflows</strong>: The n8n platform provides complete transparency into how user queries are processed, from initial input through NotebookLM-curated content retrieval to final response generation, supporting accountability and system understanding.</li>
-            <li><strong>Empowerment and Resource Connection</strong>: The system is designed to connect users with appropriate South African healthcare resources, maintaining the original platform's focus on public clinic access and community health worker support.</li>
+            <li>
+                <strong>Safety & Accuracy:</strong>
+                RAG architecture grounds responses in curated, verified content. AI Agent includes disclaimers about non-diagnostic use.
+            </li>
+            <li>
+                <strong>Privacy:</strong>
+                Session-based memory and compliance with POPIA and international data protection standards.
+            </li>
+            <li>
+                <strong>Bias Mitigation:</strong>
+                NotebookLM curation ensures diverse representation; AI Agent prompts emphasize cultural sensitivity.
+            </li>
+            <li>
+                <strong>Transparency:</strong>
+                n8n workflows provide full visibility into AI processes, supporting accountability.
+            </li>
+            <li>
+                <strong>User Empowerment:</strong>
+                Connects users to SA healthcare resources (clinics, hotlines) and encourages professional consultation.
+            </li>
         </ul>
 
+        <!-- ============================================= -->
+        <!-- 7. Conclusion & Reflection -->
+        <!-- ============================================= -->
         <h3>7. Conclusion & Reflection</h3>
-        <p>The successful implementation of the HypertenCare AI Assistant using NotebookLM knowledge curation, n8n workflow automation, and Figma site integration represents a significant advancement from conceptual architecture to functional system. This project demonstrates that sophisticated AI-powered healthcare solutions can be developed using accessible, visual workflow platforms combined with advanced knowledge curation tools while maintaining the ethical standards and cultural sensitivity required for public health applications.</p>
-
-        <p>Key achievements of the implementation include:</p>
+        <p>
+            The implementation demonstrates that sophisticated, ethical, and culturally sensitive AI healthcare solutions can be built using accessible tools like <strong>n8n, NotebookLM, and Figma</strong>. Key achievements include:
+        </p>
         <ul>
-            <li><strong>Knowledge-Driven Architecture Execution:</strong> The integration of NotebookLM for content curation with n8n workflow automation validates the effectiveness of combining AI-powered knowledge synthesis with workflow orchestration for healthcare applications.</li>
-            <li><strong>Curated Medical Content Foundation:</strong> NotebookLM's systematic processing of medical sources creates a high-quality, structured knowledge base that ensures accurate, accessible health information delivery.</li>
-            <li><strong>Automated Knowledge Management:</strong> The Google Drive integration with automated document processing creates a sustainable system for maintaining current hypertension knowledge without manual oversight.</li>
-            <li><strong>User-Centered Design Preservation:</strong> The Figma frontend maintains the accessibility and user experience strengths of the original platform while adding intelligent backend capabilities powered by curated content.</li>
-            <li><strong>Scalable Technical Foundation:</strong> The implemented architecture can adapt to growing user bases and expanding knowledge requirements through its cloud-native, workflow-driven design with integrated knowledge curation.</li>
-            <li><strong>Cultural and Ethical Integration:</strong> The system successfully incorporates South African healthcare contexts and ethical guidelines into both its technical implementation and operational practices, enhanced by NotebookLM's ability to synthesize culturally appropriate content.</li>
+            <li>Bridging the gap between AI research and practical healthcare applications.</li>
+            <li>Automated knowledge management with NotebookLM and Google Drive.</li>
+            <li>Scalable, transparent architecture with n8n workflows.</li>
+            <li>Preservation of HypertenCare’s accessibility and UX strengths.</li>
         </ul>
+        <p>
+            This project sets a foundation for future enhancements, such as integrating user assessment tools and expanding to other health conditions, while maintaining trust and accuracy.
+        </p>
 
-        <p>This implementation demonstrates that the gap between AI research and practical healthcare applications can be bridged through thoughtful architecture choices, intelligent content curation, workflow automation, and commitment to user-centered design principles. The resulting system provides a foundation for improved hypertension management support that can evolve with both technological advancement and community needs while maintaining the highest standards of medical accuracy and cultural sensitivity.</p>
-
+        <!-- ============================================= -->
+        <!-- Appendix: Technical Details -->
+        <!-- ============================================= -->
         <div class="appendix-section">
-            <h2>Appendix: NotebookLM Integration Details</h2>
-            
-            <h3>NotebookLM Prompt for Knowledge Base Generation</h3>
-            <p>To generate the foundational knowledge base for our chatbot, we used a structured prompt within NotebookLM, leveraging its capability to synthesize information from uploaded source documents (e.g., WHO fact sheets, medical guidelines, South African health department resources).</p>
-            
+            <h2>Appendix: Technical Details</h2>
+            <h3>NotebookLM Prompt for Knowledge Base</h3>
             <div class="prompt-box">
-                <strong>NotebookLM Prompt:</strong><br><br>
-                Acting as a medical information specialist creating a knowledge base for a public-facing health chatbot, please use the provided sources to generate a comprehensive, clear, and easy-to-understand summary on the topic of hypertension.<br><br>
-                
-                Organize the output into the following distinct sections:<br><br>
-                
-                <strong>1. What is Hypertension?:</strong> A simple, one-paragraph definition suitable for a layperson.<br><br>
-                
-                <strong>2. Common Causes and Risk Factors:</strong> A bulleted list of the most significant factors, with attention to South African-specific risk factors where relevant.<br><br>
-                
-                <strong>3. Symptoms to Watch For:</strong> A list of common symptoms, with a strong disclaimer that many people have no symptoms.<br><br>
-                
-                <strong>4. Diagnosis Methods:</strong> A brief explanation of how blood pressure is measured and diagnosed, including accessibility considerations for South African healthcare settings.<br><br>
-                
-                <strong>5. Lifestyle Management Tips:</strong> A bulleted list of actionable advice related to diet, exercise, and stress management, considering South African cultural contexts and available resources.<br><br>
-                
-                <strong>6. When to See a Doctor:</strong> Clear guidance on when a user should seek professional medical advice, with references to South African public healthcare resources.<br><br>
-                
-                Ensure the tone is encouraging and supportive, culturally sensitive to South African communities, and avoid overly technical jargon. The goal is to create a foundational document that can be broken down into smaller chunks for our chatbot's retrieval system while maintaining accessibility for users with varying levels of health literacy.
+                <strong>Prompt:</strong><br>
+                "Act as a medical information specialist. Use the provided sources to generate a comprehensive, easy-to-understand summary on hypertension, organized into:
+                <ol>
+                    <li><strong>Definition:</strong> Simple, one-paragraph explanation.</li>
+                    <li><strong>Risk Factors:</strong> Bulleted list, including SA-specific factors.</li>
+                    <li><strong>Symptoms:</strong> Common signs with disclaimers about asymptomatic cases.</li>
+                    <li><strong>Diagnosis:</strong> Blood pressure measurement and SA healthcare accessibility.</li>
+                    <li><strong>Lifestyle Tips:</strong> Actionable advice for diet, exercise, and stress management.</li>
+                    <li><strong>When to See a Doctor:</strong> Clear guidance with SA public healthcare references."
+                </li>
+                </ol>
+                Ensure tone is encouraging, culturally sensitive, and avoids jargon."
             </div>
-            
+
             <h3>AI Usage Statement</h3>
-            <p>This project utilized multiple AI technologies in its development and implementation:</p>
+            <p>This project utilized:</p>
             <ul>
-                <li><strong>NotebookLM:</strong> Used for synthesizing and curating medical source documents into structured, accessible knowledge base content following the specified prompt framework.</li>
-                <li><strong>Google Gemini 2.0 Flash Experimental:</strong> Integrated as the core language model for generating contextual responses and creating document embeddings within the n8n workflow.</li>
-                <li><strong>n8n AI Agent:</strong> Configured with specialized prompts to provide hypertension-focused health guidance while maintaining cultural sensitivity for South African contexts.</li>
-                <li><strong>Pinecone Vector Database:</strong> Utilized AI-powered semantic search capabilities to match user queries with relevant knowledge base content.</li>
-                <li><strong>Claude (Anthropic):</strong> Used during the development process for architecture planning, documentation review, and technical guidance.</li>
+                <li><strong>NotebookLM:</strong> Knowledge curation and content synthesis.</li>
+                <li><strong>Google Gemini:</strong> Semantic search and response generation.</li>
+                <li><strong>n8n:</strong> Workflow automation and backend orchestration.</li>
+                <li><strong>Pinecone:</strong> Vector database for semantic search.</li>
+                <li><strong>Claude:</strong> Development support and documentation review.</li>
             </ul>
-            <p>All AI tools were used responsibly with human oversight, particularly for medical content verification and cultural sensitivity review. The final system includes appropriate disclaimers about the educational nature of the content and the importance of professional medical consultation.</p>
-            
+            <p>All AI tools were used with human oversight, prioritizing medical accuracy and cultural sensitivity.</p>
+
             <h3>References</h3>
-            <p><strong>Technical Documentation:</strong></p>
+            <p><strong>Technical:</strong></p>
             <ul>
-                <li>n8n Workflow Automation Platform Documentation</li>
-                <li>Google Gemini API Documentation and Integration Guidelines</li>
-                <li>Pinecone Vector Database Implementation Guide</li>
-                <li>Figma Site Development and Webhook Integration</li>
-                <li>NotebookLM Documentation and Best Practices Guide</li>
+                <li>n8n, Google Gemini, Pinecone, Figma, NotebookLM documentation.</li>
             </ul>
-            
-            <p><strong>Medical and Health Resources:</strong></p>
+            <p><strong>Medical:</strong></p>
             <ul>
-                <li>World Health Organization (WHO) Hypertension Fact Sheets</li>
-                <li>South African Department of Health Hypertension Guidelines</li>
-                <li>National Institute for Health and Care Excellence (NICE) Hypertension Guidelines</li>
-                <li>American Heart Association Blood Pressure Resources</li>
-                <li>South African Medical Research Council Publications on Hypertension</li>
-            </ul>
-            
-            <p><strong>Implementation Resources:</strong></p>
-            <ul>
-                <li>Enterprise Architecture Framework Guidelines</li>
-                <li>Healthcare AI Ethics and Implementation Standards</li>
-                <li>South African National Health Insurance (NHI) Implementation Guidelines</li>
-                <li>Community Health Worker Integration Best Practices</li>
+                <li>WHO Hypertension Fact Sheets.</li>
+                <li>SA Department of Health Guidelines.</li>
+                <li>American Heart Association Resources.</li>
             </ul>
         </div>
     </div>
